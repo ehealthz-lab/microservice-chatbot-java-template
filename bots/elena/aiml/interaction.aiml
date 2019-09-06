@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml>
+<category><pattern>WHAT ARE YOU</pattern>
+<template>I am a bot!<oob>EXAMPLE</oob></template>
+</category>
+</aiml>
