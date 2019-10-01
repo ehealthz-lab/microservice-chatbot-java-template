@@ -11,7 +11,7 @@ RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
 # Update repository
-RUN apt-get update
+RUN apt-get update --fix-missing
 
 # Install Java
 RUN echo "deb http://http.debian.net/debian stretch-backports main" | tee --append /etc/apt/sources.list
@@ -38,10 +38,12 @@ ADD files /project/files
 ADD pom.xml /project/pom.xml
 ADD foo.crt /project/foo.crt
 ADD foo.ehealthz.es.crt /project/foo.ehealthz.es.crt
+ADD foo.pem /project/foo.pem
 
 # Add certs to java cacerts
 RUN  echo "yes" | keytool -import -keystore /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -file foo.crt -alias security -storepass changeit
 RUN  echo "yes" | keytool -import -keystore /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -file foo.ehealthz.es.crt -alias chatbot -storepass changeit
+RUN  echo "yes" | keytool -import -keystore /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -file foo.pem -alias foo -storepass changeit
 
 # Add all the project
 ADD bots /project/bots
